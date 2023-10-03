@@ -31,6 +31,7 @@ searchBtn.addEventListener('click' , function() {
     var city =cityInput.value;
     if (city) {
         getWeatherData(city);
+        addToSearchHistory(city);
     }else {
         alert('Enter a City Name');
     }
@@ -107,20 +108,20 @@ function displayForecast(dailyData) {
          var weatherImg = document.createElement("img");
          weatherImg.src =
            "https://openweathermap.org/img/wn/" +
-           dayData.weather[0].icon +
+           dailyData.weather[0].icon +
            ".png";
 
          var tempText = document.createElement("p");
          tempText.classList.add("card-text");
-         tempText.textContent = "Temperature: " + dayData.temp.day + "°C";
+         tempText.textContent = "Temperature: " + dailyData.temp.day + "°C";
 
          var windText = document.createElement("p");
          windText.classList.add("card-text");
-         windText.textContent = "Wind Speed: " + dayData.wind_speed + " km/h";
+         windText.textContent = "Wind Speed: " + dailyData.wind_speed + " km/h";
 
          var humidityText = document.createElement("p");
          humidityText.classList.add("card-text");
-         humidityText.textContent = "Humidity: " + dayData.humidity + "%";
+         humidityText.textContent = "Humidity: " + dailyData.humidity + "%";
 
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(weatherImg);
