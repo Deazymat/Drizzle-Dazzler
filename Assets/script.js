@@ -51,9 +51,9 @@ function getWeatherData(city) {
                 return data.coord;
             })
             .then(function(coord) {
-                var forcastUrl =
+                var forecastUrl =
                   "https://api.openweathermap.org/data/2.5/onecall?lat=" + coord.lat + "&lon=" + coord.lon + "&exclude=current,minutely,hourly,alerts&appid=" + API_KEY + "&units=metric";
-                    fetch(forcastUrl)
+                    fetch(forecastUrl)
                         .then(function(response) {
                             if (response.ok) {
                                 return response.json();
@@ -62,7 +62,7 @@ function getWeatherData(city) {
                             }
                         })
                         .then(function(data) {
-                            displayForcast(data.daily);
+                            displayForecast(data.daily);
                         });
             });
 
