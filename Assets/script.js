@@ -6,7 +6,14 @@ var weatherIcon = document.getElementById("weatherIcon");
 var currentTemperature = document.getElementById("currentTemperature");
 var currentHumidity = document.getElementById("currentHumidity");
 var currentWindSpeed = document.getElementById("currentWindSpeed");
-var forecastCarousel = document.getElementById("forecastCarousel");
+
+var southernTexasCitys = [
+  { name: "Webster", lat: 29.5377, lon: -95.1183 },
+  { name: "Lake Jackson", lat: 29.5377, lon: -95.1183 },
+  { name: "Port Arthur", lat: 29.5377, lon: -95.1183 },
+  { name: "Pasadena", lat: 29.5377, lon: -95.1183 },
+  { name: "Nassau Bay", lat: 29.5377, lon: -95.1183 },
+];
 
 var API_KEY = "1ee679158fc39ec6485ef9e91e4c5172";
 
@@ -26,11 +33,10 @@ function getWeatherData(city) {
       "&appid=" +
       API_KEY +
       "&units=metric";
-
          fetch(apiURL)
-        .then(response => response.json())
-        .then(data => {
-            displayCurrentWeather(data);
+         .then(response => response.json())
+            .then(data => {
+                displayCurrentWeather(data);
             var lat = data.coord.lat;
             var lon = data.coord.lon;
             return fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric");
@@ -40,6 +46,69 @@ function getWeatherData(city) {
             displayForecast(data.list);
         })
         .catch(err => console.error("Error fetching data:", err));
+       
+}
+function addTexasCityButtons() {
+  var texasCityContainer = document.getElementById("southernTexasCities");
+
+  southernTexasCitys.forEach(function (city) {
+    var cityBtn = document.createElement("button");
+    cityBtn.classList.add("btn", "btn-light", "mb-2", "mr-2");
+    cityBtn.textContent = city.name;
+    cityBtn.addEventListener("click", function () {
+      getWeatherDataByCoords(city.lat, city.lon);
+    });
+    texasCityContainer.appendChild(cityBtn);
+  });
+}
+
+function getWeatherDataByCoords(lat, lon) {
+  var apiURL =
+    "https://api.openweathermap.org/data/2.5/weather?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&appid=" +
+    API_KEY +
+    "&units=metric";
+
+  fetch(apiURL)
+    .then((response) => response.json())
+    .then((data) => {
+      displayCurrentWeather(data);
+      return fetch(
+        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
+          lat +
+          "&lon=" +
+          lon +
+          "&appid=" +
+          API_KEY +
+          "&units=metric"
+      );
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      displayForecast(data.list);
+    })
+    .catch((err) => console.error("Error fetching data:", err));
+}
+
+
+function getWeatherDataByCoords(lat, lon) {
+    var apiURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
+    
+    fetch(apiURL)
+    .then(response => response.json())
+    .then(data => {
+        displayCurrentWeather(data);
+        return fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric");
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayForecast(data.list);
+    })
+    .catch(err => console.error("Error fetching data:", err));
+}
 }
 
 function displayCurrentWeather(data) {
@@ -56,13 +125,9 @@ function displayForecast(forecastData) {
 
   for (var i = 0; i < 5; i++) {
     var dayData = forecastData[i];
-
     var card = document.createElement("div");
     card.classList.add("card", "col-md-2", "ml-3");
     
-    var card = document.createElement("div");
-    card.classList.add("card");
-
     var cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
@@ -76,7 +141,7 @@ function displayForecast(forecastData) {
 
     var tempText = document.createElement("p");
     tempText.classList.add("card-text");
-    tempText.textContent = "Temperature: " + dayData.temp.day + "°C";
+    tempText.textContent = "Temperature: " + dayData.temp.day + "°F";
 
     var windText = document.createElement("p");
     windText.classList.add("card-text");
@@ -92,18 +157,18 @@ function displayForecast(forecastData) {
     cardBody.appendChild(tempText);
     cardBody.appendChild(humidityText);
     card.appendChild(cardBody);
-    carouselItem.appendChild(card);
-    forecastCarousel.appendChild(carouselItem);
+    document.getElementById("forecastContainer").appendChild(card);
   }
 }
 
 function addToSearchHistory(city) {
-    var cityBtn = document.createElement('button');
-    cityBtn.classList.add('btn', 'btn-light', 'mb-2', 'w-100');
-    cityBtn.textContent = city;
-    cityBtn.addEventListener('click' , function() {
-        getWeatherData(city);
-    });
-    searchHistory.appendChild(cityBtn);
-    
+  var listItem = document.createElement("button");
+  listItem.classList.add("list-group-item", "list-group-item-action");
+  listItem.textContent = city;
+  listItem.addEventListener("click", function () {
+    getWeatherData(city);
+  });
+  searchHistory.appendChild(listItem);
+
 }
+addTexasCityButtons();
