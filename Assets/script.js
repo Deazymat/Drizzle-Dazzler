@@ -27,4 +27,48 @@ var forecastCarousel = document.getElementById("forecastCarousel");
 
 var API_KEY = "9f9bbfacd8f14f3564f2ff92cd8a15bf";
 
+searchBtn.addEventListener('click' , function() {
+    var city =cityInput.value;
+    if (city) {
+        getWeatherData(city);
+    }else {
+        alert('Enter a City Name');
+    }
+});
+function getWeatherData(city) {
+    var apiURL =
+      "https://api.openweathermap.org/data/2.5/weather?q=" + city + "appid=" + API_KEY + "&units=metric";
+        fetch(apiURL)
+            .then(function(response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    alert('Error: ' + response.statusText);
+                }
+            })
+            .then(function(data) {
+                displayCurrentWeather(data);
+                return data.coord;
+            })
+            .then(function(coord) {
+                var forcastUrl =
+                  "https://api.openweathermap.org/data/2.5/onecall?lat=" + coord.lat + "&lon=" + coord.lon + "&exclude=current,minutely,hourly,alerts&appid=" + API_KEY + "&units=metric";
+                    fetch(forcastUrl)
+                        .then(function(response) {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                alert('Error: ' + response.statusText);
+                            }
+                        })
+                        .then(function(data) {
+                            displayForcast(data.daily);
+                        });
+            });
+
+
+
+
+}
+
 
