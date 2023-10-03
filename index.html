@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drizzle Dazzler</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Drizzle Dazzler</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="cityInput" placeholder="Enter City">
+                </div>
+                <button id="searchBtn" class="btn btn-primary mb-2">Search</button>
+                <div id="searchHistory"></div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title" id="currentCity">City Name, Date</h5>
+                        <img src="" alt="Weather Icon" id="weatherIcon" class="mb-2">
+                        <p class="card-text" id="currentTemperature">Temperature: 00°C</p>
+                        <p class="card-text" id="currentHumidity">Humidity: 00%</p>
+                        <p class="card-text" id="currentWindSpeed">Wind Speed: 00 km/h</p>
+                    </div>
+                </div>
+
+                <div id="forecastCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <!-- Sample Carousel Item -->
+                        <div class="carousel-item active">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Date</h5>
+                                    <img src="" alt="Weather Icon" class="mb-2">
+                                    <p class="card-text">Temperature: 00°C</p>
+                                    <p class="card-text">Wind Speed: 00 km/h</p>
+                                    <p class="card-text">Humidity: 00%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Date</h5>
+                                    <img src="" alt="Weather Icon" class="mb-2">
+                                    <p class="card-text">Temperature: 00°C</p>
+                                    <p class="card-text">Wind Speed: 00 km/h</p>
+                                    <p class="card-text">Humidity: 00%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Date</h5>
+                                    <img src="" alt="Weather Icon" class="mb-2">
+                                    <p class="card-text">Temperature: 00°C</p>
+                                    <p class="card-text">Wind Speed: 00 km/h</p>
+                                    <p class="card-text">Humidity: 00%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Date</h5>
+                                    <img src="" alt="Weather Icon" class="mb-2">
+                                    <p class="card-text">Temperature: 00°C</p>
+                                    <p class="card-text">Wind Speed: 00 km/h</p>
+                                    <p class="card-text">Humidity: 00%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Date</h5>
+                                    <img src="" alt="Weather Icon" class="mb-2">
+                                    <p class="card-text">Temperature: 00°C</p>
+                                    <p class="card-text">Wind Speed: 00 km/h</p>
+                                    <p class="card-text">Humidity: 00%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add more carousel items as needed -->
+                    </div>
+                    <a class="carousel-control-prev" href="#forecastCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#forecastCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
