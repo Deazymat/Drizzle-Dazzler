@@ -101,7 +101,7 @@ function displayForecast(dailyData) {
          var cardTitle = document.createElement("h5");
          cardTitle.classList.add("card-title");
          cardTitle.textContent = new Date(
-           dayData.dt * 1000
+           dailyData.dt * 1000
          ).toLocaleDateString();
 
          var weatherImg = document.createElement("img");
@@ -142,4 +142,5 @@ function addToSearchHistory(city) {
         getWeatherData(city);
     });
     searchHistory.appendChild(cityBtn);
+    
 }
