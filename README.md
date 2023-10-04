@@ -13,6 +13,10 @@ Drizzle Dazzler is a web application designed to generate weather information fo
 - View detailed weather information, including temperature, humidity, and wind speed
 - Responsive design for easy use on various devices
 
+## Screenshot
+
+![My Screenshot](./Assets/pictures/screencapture-127-0-0-1-5501-index-html-2023-10-03-21_55_06.png)
+
 ## Dependencies
 
 - OpenWeatherMap API
