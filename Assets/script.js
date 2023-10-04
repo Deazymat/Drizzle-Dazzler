@@ -30,7 +30,7 @@ searchBtn.addEventListener("click", function () {
 var resetBtn = document.getElementById("resetBtn");
 
 resetBtn.addEventListener("click", function () {
-  cityInput.value = ""; 
+  cityInput.value = ""; // Clear the input field
   searchHistory.innerHTML = ""; 
   var forecastContainer = document.getElementById("forecastContainer");
   forecastContainer.innerHTML = ""; 
