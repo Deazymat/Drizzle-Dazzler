@@ -26,6 +26,22 @@ searchBtn.addEventListener("click", function () {
     alert("Enter a City Name");
   }
 });
+
+var resetBtn = document.getElementById("resetBtn");
+
+resetBtn.addEventListener("click", function () {
+  cityInput.value = ""; 
+  searchHistory.innerHTML = ""; 
+  var forecastContainer = document.getElementById("forecastContainer");
+  forecastContainer.innerHTML = ""; 
+  currentCity.textContent = "City Name, Date";
+  weatherIcon.src = "";
+  currentTemperature.textContent = "Temperature: 00°F";
+  currentHumidity.textContent = "Humidity: 00%";
+  currentWindSpeed.textContent = "Wind Speed: 00 km/h";
+});
+
+
 function getWeatherData(city) {
   var apiURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
