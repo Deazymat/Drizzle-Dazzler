@@ -25,7 +25,9 @@
                 <button id="searchBtn" class="btn btn-primary btn-block mb-2">Search</button>
                 <div id="searchHistory"></div>
                 <div class="mt-4">
-                    <h4 class="text-center texas-header">Southern Texas Cities</h4>
+                   
+                    <h4  class="text-center texas-header">Southern Texas Cities</h4>
+                     
                     <div id="southernTexasCities"></div>
                 </div>
             </div>
@@ -36,14 +38,30 @@
                     <p class="card-text" id="currentTemperature">Temperature: 00°F</p>
                     <p class="card-text" id="currentHumidity">Humidity: 00%</p>
                     <p class="card-text" id="currentWindSpeed">Wind Speed: 00 km/h</p>
+
                 </div>
             </div>
         </div>
-
         <div class="col-md-12">
-            <div id="forecastContainer" class="row mt-3"></div>
+            <div id="forecastContainer" class="row mt-3">
+            </div>
+            <div class="row">
+
+                <div class="col-md-2" style="flex: 0 0 20%; max-width: 20%;">
+                    <div class="card">
+                        <!-- <div class="card-body small" style="max-height: 200px; overflow: hidden;">
+                                <h5 class="card-title forecast-city">City Name, Date</h5>
+                                <img src="" alt="Weather Icon" class="forecast-icon mb-2">
+                                <p class="card-text forecast-temperature">Temperature: 00°F</p>
+                                <p class="card-text forecast-humidity">Humidity: 00%</p>
+                                <p class="card-text forecast-wind-speed">Wind Speed: 00 km/h</p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+   
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

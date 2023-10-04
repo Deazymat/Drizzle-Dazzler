@@ -15,50 +15,55 @@ var southernTexasCitys = [
   { name: "Nassau Bay", lat: 29.5419, lon: -95.0894 },
 ];
 
-
 var API_KEY = "1ee679158fc39ec6485ef9e91e4c5172";
 
-searchBtn.addEventListener('click' , function() {
-    var city =cityInput.value;
-    if (city) {
-        getWeatherData(city);
-        addToSearchHistory(city);
-    }else {
-        alert('Enter a City Name');
-    }
+searchBtn.addEventListener("click", function () {
+  var city = cityInput.value;
+  if (city) {
+    getWeatherData(city);
+    addToSearchHistory(city);
+  } else {
+    alert("Enter a City Name");
+  }
 });
 function getWeatherData(city) {
-    var apiURL =
-      "https://api.openweathermap.org/data/2.5/weather?q=" +
-      city +
-      "&appid=" +
-      API_KEY +
-      "&units=metric";
-         fetch(apiURL)
-         .then(response => response.json())
-            .then(data => {
-                displayCurrentWeather(data);
-            var lat = data.coord.lat;
-            var lon = data.coord.lon;
-            return fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric");
-        })
-        .then(response => response.json())
-        .then(data => {
-           console.log("Forecast Data:", data);
-            displayForecast(data.list);
-        })
-        .catch(err => console.error("Error fetching data:", err));
-       
+  var apiURL =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    city +
+    "&appid=" +
+    API_KEY +
+    "&units=metric";
+  fetch(apiURL)
+    .then((response) => response.json())
+    .then((data) => {
+      displayCurrentWeather(data);
+      var lat = data.coord.lat;
+      var lon = data.coord.lon;
+      return fetch(
+        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
+          lat +
+          "&lon=" +
+          lon +
+          "&appid=" +
+          API_KEY +
+          "&units=metric"
+      );
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      displayForecast(data.list);
+    })
+    .catch((err) => console.error("Error fetching data:", err));
 }
 function addTexasCityButtons() {
   var texasCityContainer = document.getElementById("southernTexasCities");
   texasCityContainer.innerHTML = "";
-  
-  southernTexasCitys.forEach(city => {
-    var button = document.createElement('button');
-    button.classList.add('btn', 'btn-secondary', 'btn-block', 'mb-1');
+
+  southernTexasCitys.forEach((city) => {
+    var button = document.createElement("button");
+    button.classList.add("btn", "btn-secondary", "btn-block", "mb-1");
     button.textContent = city.name;
-    button.onclick = function() {
+    button.onclick = function () {
       getWeatherDataByCoords(city.lat, city.lon);
     };
     texasCityContainer.appendChild(button);
@@ -66,73 +71,100 @@ function addTexasCityButtons() {
 }
 
 function getWeatherDataByCoords(lat, lon) {
-    var apiURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
-    
-    fetch(apiURL)
-    .then(response => response.json())
-    .then(data => {
-        displayCurrentWeather(data);
-        return fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric");
-    })
-    .then(response => response.json())
-    .then(data => {
-        displayForecast(data.list);
-    })
-    .catch(err => console.error("Error fetching data:", err));
-}
+  var apiURL =
+    "https://api.openweathermap.org/data/2.5/weather?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&appid=" +
+    API_KEY +
+    "&units=metric";
 
+  fetch(apiURL)
+    .then((response) => response.json())
+    .then((data) => {
+      displayCurrentWeather(data);
+      return fetch(
+        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
+          lat +
+          "&lon=" +
+          lon +
+          "&appid=" +
+          API_KEY +
+          "&units=metric"
+      );
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      displayForecast(data.list);
+    })
+    .catch((err) => console.error("Error fetching data:", err));
+}
 
 function displayCurrentWeather(data) {
-    var tempFahrenheit = (data.main.temp * 9) / 5 + 32;
-    currentCity.textContent = data.name + ", " + new Date().toLocaleDateString();
-    weatherIcon.src = "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
-    currentTemperature.textContent = "Temperature: " + tempFahrenheit.toFixed(1) + "°F";
-    currentHumidity.textContent = "Humidity: " + data.main.humidity + "%";
-    currentWindSpeed.textContent = "Wind Speed: " + data.wind.speed + " km/h";
+
+  var tempFahrenheit = (data.main.temp * 9) / 5 + 32;
+  currentCity.textContent = data.name + ", " + new Date().toLocaleDateString();
+  weatherIcon.src =
+    "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png";
+  currentTemperature.textContent =
+    "Temperature: " + tempFahrenheit.toFixed(1) + "°F";
+  currentHumidity.textContent = "Humidity: " + data.main.humidity + "%";
+  currentWindSpeed.textContent = "Wind Speed: " + data.wind.speed + " km/h";
 }
 
-function displayForecast(forecastData) {
-  console.log("Forecast Data:", data);
-   document.getElementById("forecastContainer").innerHTML = "";
+  function displayForecast(forecastData) {
+    var forecastContainer = document.getElementById("forecastContainer");
+    forecastContainer.innerHTML = ""; // clear previous forecasts
 
-  for (var i = 3; i < 40; i+=8) {
-    var dayData = forecastData[i];
-    var card = document.createElement("div");
-    card.classList.add("card", "col-md-2", "ml-3");
-    
-    var cardBody = document.createElement("div");
-    cardBody.classList.add("card-body");
+    for (var i = 4, j = 0; i < forecastData.length && j < 5; i += 8, j++) {
+      var dayData = forecastData[i];
 
-    var cardTitle = document.createElement("h5");
-    cardTitle.classList.add("card-title");
-    cardTitle.textContent = new Date(dayData.dt * 1000).toLocaleDateString();
+      // Card creation logic
+      var cardColumn = document.createElement("div");
+      cardColumn.className = "custom-column";
 
-    var weatherImg = document.createElement("img");
-    weatherImg.src =
-      "https://openweathermap.org/img/wn/" + dayData.weather[0].icon + ".png";
+      var card = document.createElement("div");
+      card.className = "card";
 
-    var tempText = document.createElement("p");
-    tempText.classList.add("card-text");
-    var tempFahrenheitInForecast = (dayData.temp.day * 9) / 5 + 32;
-    tempText.textContent = "Temperature: " + tempFahrenheitInForecast.toFixed(1) + "°F";
+      var cardBody = document.createElement("div");
+      cardBody.className = "card-body small";
 
-    var windText = document.createElement("p");
-    windText.classList.add("card-text");
-    windText.textContent = "Wind Speed: " + dayData.wind_speed + " km/h";
+      var cardTitle = document.createElement("h5");
+      cardTitle.className = "card-title forecast-city";
+      cardTitle.textContent = new Date(dayData.dt * 1000).toLocaleDateString();
 
-    var humidityText = document.createElement("p");
-    humidityText.classList.add("card-text");
-    humidityText.textContent = "Humidity: " + dayData.humidity + "%";
+      var cardIcon = document.createElement("img");
+      cardIcon.src =
+        "https://openweathermap.org/img/wn/" + dayData.weather[0].icon + ".png";
+      cardIcon.className = "forecast-icon mb-2";
+      cardIcon.alt = "Weather Icon";
 
-    cardBody.appendChild(cardTitle);
-    cardBody.appendChild(weatherImg);
-    cardBody.appendChild(windText);
-    cardBody.appendChild(tempText);
-    cardBody.appendChild(humidityText);
-    card.appendChild(cardBody);
-    document.getElementById("forecastContainer").appendChild(card);
+      var cardTemp = document.createElement("p");
+      cardTemp.className = "card-text forecast-temperature";
+      cardTemp.textContent =
+        "Temperature: " + ((dayData.main.temp * 9) / 5 + 32).toFixed(1) + "°F";
+
+      var cardHumidity = document.createElement("p");
+      cardHumidity.className = "card-text forecast-humidity";
+      cardHumidity.textContent = "Humidity: " + dayData.main.humidity + "%";
+
+      var cardWindSpeed = document.createElement("p");
+      cardWindSpeed.className = "card-text forecast-wind-speed";
+      cardWindSpeed.textContent = "Wind Speed: " + dayData.wind.speed + " km/h";
+
+      cardBody.appendChild(cardTitle);
+      cardBody.appendChild(cardIcon);
+      cardBody.appendChild(cardTemp);
+      cardBody.appendChild(cardHumidity);
+      cardBody.appendChild(cardWindSpeed);
+
+      card.appendChild(cardBody);
+      cardColumn.appendChild(card);
+
+      forecastContainer.appendChild(cardColumn);
+    }
   }
-}
 
 function addToSearchHistory(city) {
   var listItem = document.createElement("button");
@@ -142,6 +174,5 @@ function addToSearchHistory(city) {
     getWeatherData(city);
   });
   searchHistory.appendChild(listItem);
-
 }
 addTexasCityButtons();

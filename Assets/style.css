@@ -40,3 +40,7 @@ body {
 .navbar {
     background-color: darkgray;
 }
+.custom-column {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
