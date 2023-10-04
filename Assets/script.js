@@ -31,16 +31,15 @@ var resetBtn = document.getElementById("resetBtn");
 
 resetBtn.addEventListener("click", function () {
   cityInput.value = ""; // Clear the input field
-  searchHistory.innerHTML = ""; 
+  searchHistory.innerHTML = "";
   var forecastContainer = document.getElementById("forecastContainer");
-  forecastContainer.innerHTML = ""; 
+  forecastContainer.innerHTML = "";
   currentCity.textContent = "City Name, Date";
   weatherIcon.src = "";
   currentTemperature.textContent = "Temperature: 00°F";
   currentHumidity.textContent = "Humidity: 00%";
   currentWindSpeed.textContent = "Wind Speed: 00 km/h";
 });
-
 
 function getWeatherData(city) {
   var apiURL =
@@ -118,7 +117,6 @@ function getWeatherDataByCoords(lat, lon) {
 }
 
 function displayCurrentWeather(data) {
-
   var tempFahrenheit = (data.main.temp * 9) / 5 + 32;
   currentCity.textContent = data.name + ", " + new Date().toLocaleDateString();
   weatherIcon.src =
@@ -129,59 +127,55 @@ function displayCurrentWeather(data) {
   currentWindSpeed.textContent = "Wind Speed: " + data.wind.speed + " km/h";
 }
 
-  function displayForecast(forecastData) {
-    var forecastContainer = document.getElementById("forecastContainer");
-    forecastContainer.innerHTML = ""; // clear previous forecasts
+function displayForecast(forecastData) {
+  var forecastContainer = document.getElementById("forecastContainer");
+  forecastContainer.innerHTML = ""; // clear previous forecasts
 
-    for (var i = 4, j = 0; i < forecastData.length && j < 5; i += 8, j++) {
-      var dayData = forecastData[i];
+  for (var i = 4, j = 0; i < forecastData.length && j < 5; i += 8, j++) {
+    var dayData = forecastData[i];
 
-      // Card creation logic
-      var cardColumn = document.createElement("div");
-      cardColumn.className = "custom-column";
+    var cardColumn = document.createElement("div");
+    cardColumn.className = "custom-column";
 
-      var card = document.createElement("div");
-      card.className = "card";
+    var card = document.createElement("div");
+    card.className = "card";
 
-      var cardBody = document.createElement("div");
-      cardBody.className = "card-body small";
+    var cardBody = document.createElement("div");
+    cardBody.className = "card-body small";
 
-      var cardTitle = document.createElement("h5");
-      cardTitle.className = "card-title forecast-city";
-      cardTitle.textContent = new Date(dayData.dt * 1000).toLocaleDateString();
+    var cardTitle = document.createElement("h5");
+    cardTitle.className = "card-title forecast-city";
+    cardTitle.textContent = new Date(dayData.dt * 1000).toLocaleDateString();
 
-      var cardIcon = document.createElement("img");
-      cardIcon.src =
-        "https://openweathermap.org/img/wn/" + dayData.weather[0].icon + ".png";
-      cardIcon.className = "forecast-icon mb-2";
-      cardIcon.alt = "Weather Icon";
+    var cardIcon = document.createElement("img");
+    cardIcon.src =
+      "https://openweathermap.org/img/wn/" + dayData.weather[0].icon + ".png";
+    cardIcon.className = "forecast-icon mb-2";
+    cardIcon.alt = "Weather Icon";
 
-      var cardTemp = document.createElement("p");
-      cardTemp.className = "card-text forecast-temperature";
-      cardTemp.textContent =
-        "Temperature: " + ((dayData.main.temp * 9) / 5 + 32).toFixed(1) + "°F";
+    var cardTemp = document.createElement("p");
+    cardTemp.className = "card-text forecast-temperature";
+    cardTemp.textContent =
+      "Temperature: " + ((dayData.main.temp * 9) / 5 + 32).toFixed(1) + "°F";
 
-      var cardHumidity = document.createElement("p");
-      cardHumidity.className = "card-text forecast-humidity";
-      cardHumidity.textContent = "Humidity: " + dayData.main.humidity + "%";
+    var cardHumidity = document.createElement("p");
+    cardHumidity.className = "card-text forecast-humidity";
+    cardHumidity.textContent = "Humidity: " + dayData.main.humidity + "%";
 
-      var cardWindSpeed = document.createElement("p");
-      cardWindSpeed.className = "card-text forecast-wind-speed";
-      cardWindSpeed.textContent = "Wind Speed: " + dayData.wind.speed + " km/h";
+    var cardWindSpeed = document.createElement("p");
+    cardWindSpeed.className = "card-text forecast-wind-speed";
+    cardWindSpeed.textContent = "Wind Speed: " + dayData.wind.speed + " km/h";
 
-      cardBody.appendChild(cardTitle);
-      cardBody.appendChild(cardIcon);
-      cardBody.appendChild(cardTemp);
-      cardBody.appendChild(cardHumidity);
-      cardBody.appendChild(cardWindSpeed);
-
-      card.appendChild(cardBody);
-      cardColumn.appendChild(card);
-
-      forecastContainer.appendChild(cardColumn);
-    }
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardIcon);
+    cardBody.appendChild(cardTemp);
+    cardBody.appendChild(cardHumidity);
+    cardBody.appendChild(cardWindSpeed);
+    card.appendChild(cardBody);
+    cardColumn.appendChild(card);
+    forecastContainer.appendChild(cardColumn);
   }
-
+}
 function addToSearchHistory(city) {
   var listItem = document.createElement("button");
   listItem.classList.add("list-group-item", "list-group-item-action");
