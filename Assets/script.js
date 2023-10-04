@@ -9,11 +9,12 @@ var currentWindSpeed = document.getElementById("currentWindSpeed");
 
 var southernTexasCitys = [
   { name: "Webster", lat: 29.5377, lon: -95.1183 },
-  { name: "Lake Jackson", lat: 29.5377, lon: -95.1183 },
-  { name: "Port Arthur", lat: 29.5377, lon: -95.1183 },
-  { name: "Pasadena", lat: 29.5377, lon: -95.1183 },
-  { name: "Nassau Bay", lat: 29.5377, lon: -95.1183 },
+  { name: "Lake Jackson", lat: 29.0338, lon: -95.4344 },
+  { name: "Port Arthur", lat: 29.8849, lon: -93.9399 },
+  { name: "Pasadena", lat: 29.6911, lon: -95.2091 },
+  { name: "Nassau Bay", lat: 29.5419, lon: -95.0894 },
 ];
+
 
 var API_KEY = "1ee679158fc39ec6485ef9e91e4c5172";
 
@@ -43,6 +44,7 @@ function getWeatherData(city) {
         })
         .then(response => response.json())
         .then(data => {
+           console.log("Forecast Data:", data);
             displayForecast(data.list);
         })
         .catch(err => console.error("Error fetching data:", err));
@@ -50,49 +52,18 @@ function getWeatherData(city) {
 }
 function addTexasCityButtons() {
   var texasCityContainer = document.getElementById("southernTexasCities");
-
-  southernTexasCitys.forEach(function (city) {
-    var cityBtn = document.createElement("button");
-    cityBtn.classList.add("btn", "btn-light", "mb-2", "mr-2");
-    cityBtn.textContent = city.name;
-    cityBtn.addEventListener("click", function () {
+  texasCityContainer.innerHTML = "";
+  
+  southernTexasCitys.forEach(city => {
+    var button = document.createElement('button');
+    button.classList.add('btn', 'btn-secondary', 'btn-block', 'mb-1');
+    button.textContent = city.name;
+    button.onclick = function() {
       getWeatherDataByCoords(city.lat, city.lon);
-    });
-    texasCityContainer.appendChild(cityBtn);
+    };
+    texasCityContainer.appendChild(button);
   });
 }
-
-function getWeatherDataByCoords(lat, lon) {
-  var apiURL =
-    "https://api.openweathermap.org/data/2.5/weather?lat=" +
-    lat +
-    "&lon=" +
-    lon +
-    "&appid=" +
-    API_KEY +
-    "&units=metric";
-
-  fetch(apiURL)
-    .then((response) => response.json())
-    .then((data) => {
-      displayCurrentWeather(data);
-      return fetch(
-        "https://api.openweathermap.org/data/2.5/forecast?lat=" +
-          lat +
-          "&lon=" +
-          lon +
-          "&appid=" +
-          API_KEY +
-          "&units=metric"
-      );
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      displayForecast(data.list);
-    })
-    .catch((err) => console.error("Error fetching data:", err));
-}
-
 
 function getWeatherDataByCoords(lat, lon) {
     var apiURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
@@ -109,7 +80,7 @@ function getWeatherDataByCoords(lat, lon) {
     })
     .catch(err => console.error("Error fetching data:", err));
 }
-}
+
 
 function displayCurrentWeather(data) {
     var tempFahrenheit = (data.main.temp * 9) / 5 + 32;
@@ -121,9 +92,10 @@ function displayCurrentWeather(data) {
 }
 
 function displayForecast(forecastData) {
+  console.log("Forecast Data:", data);
    document.getElementById("forecastContainer").innerHTML = "";
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 3; i < 40; i+=8) {
     var dayData = forecastData[i];
     var card = document.createElement("div");
     card.classList.add("card", "col-md-2", "ml-3");
@@ -141,7 +113,8 @@ function displayForecast(forecastData) {
 
     var tempText = document.createElement("p");
     tempText.classList.add("card-text");
-    tempText.textContent = "Temperature: " + dayData.temp.day + "°F";
+    var tempFahrenheitInForecast = (dayData.temp.day * 9) / 5 + 32;
+    tempText.textContent = "Temperature: " + tempFahrenheitInForecast.toFixed(1) + "°F";
 
     var windText = document.createElement("p");
     windText.classList.add("card-text");
