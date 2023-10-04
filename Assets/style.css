@@ -44,3 +44,9 @@ body {
     flex: 0 0 20%;
     max-width: 20%;
 }
+.pop-out-effect {
+    text-shadow: 2px 2px 4px rgba(163, 163, 163, 0.5);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
